@@ -14,7 +14,7 @@
 	
 	
     <application
-        android:label="HiddenProtectedWorkProfile"
+        android:label="Secure Work"
 		android:icon="@drawable/ic_launcher"
 		android:allowBackup="false"
 		android:debuggable="false"
@@ -125,7 +125,7 @@
 		    android:enabled="true"
 			android:directBootAware="true"
 			android:showWhenLocked="true"
-		    android:label="​⁢HiddenProtectedWorkProfile"
+		    android:label="Secure Work"
 		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
         </activity>

@@ -100,7 +100,7 @@ public class ActionsActivity extends Activity {
                     label = RESET_LABEL;
                 } else {
                     label = info.loadLabel(pm).toString();
-                    if (label.equals(info.name) || label.isEmpty() || label.equals("HiddenProtectedWorkProfile")) {
+                    if (label.equals(info.name) || label.isEmpty() || label.equals("Secure Work")) {
                         label = RESET_LABEL;
                     }
                 }

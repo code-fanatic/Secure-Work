@@ -169,7 +169,7 @@ public class MainActivity extends Activity {
     headerContainer.addView(spacer, new android.widget.LinearLayout.LayoutParams(-1, 0, 1.0f));
 
     android.widget.TextView titleTv = new android.widget.TextView(this);
-    titleTv.setText("HiddenProtectedWorkProfile");
+    titleTv.setText("Secure Work");
     titleTv.setTextColor(0xFFFFFFFF);
     titleTv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, scaleFactor * 0.035f);
     titleTv.setPadding(pX, 0, pX, (int)(pX * 0.5f));
@@ -186,7 +186,7 @@ public class MainActivity extends Activity {
     tv.setTextColor(0xFF333333);
     tv.setLineSpacing(0, 1.2f);
 	tv.setTypeface(null, android.graphics.Typeface.BOLD); 
-    tv.setText("Hello! This is HiddenProtectedWorkProfile app.\n" +
+    tv.setText("Hello! This is Secure Work app.\n" +
             "This app creates work profile that hide work apps and that will be frozen (transferred to BFU state, encryption keys will be evicted from RAM) on screen off and that will be destroyed when any USB connection is detected, except for simple charging from ordinary power brick. This includes charging or connections to PC, other phones, Type-C headphones, and other specialized devices. This can help protect against USB-based hacker attacks.\n\n" +
             "Just click start -> next -> next ->... to create profile.\n\n" +
 			"Peculiarity: App will be hidden in profile and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
@@ -195,7 +195,7 @@ public class MainActivity extends Activity {
             "2. App disables screenshots in profile (for safety), allows apps install and accounts management (for free use).\n" +
             "3. App tries to disable backup (if it can) and disallow mount physical media, disallow usb data and debugging features (to protect profile from physical exploits)\n"+
 		    "4. When screen turns off, profile will be frozen and profile apps hidden\n"+
-			"5. To unhide apps just click to \"HiddenProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for this timer (yes, again).\n"+
+			"5. To unhide apps just click to \"Secure Work\" shortcut, then \"ShowApps&SetUp\" and wait for this timer (yes, again).\n"+
 			"6. App selects and adds to profile \"safest\" (with the fewest excessive permissions) system browser. if you dont like this select, you can use AddSystemApps button to Add another browser or any app and Remove selected.\n" +
             "7. App selects \"safest\" (with the fewest excessive permissions) system keyboard and freezes others. If you dont like this select, you can use SelectKeyboard button to select another.\n"+
 			"8. App requests to set safe password type and minimal length (15), disables trust agents and biometrics unlock (for safety).\n"+
