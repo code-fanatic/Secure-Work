@@ -3,7 +3,6 @@ package hidden.protectedwp.safespace;
 import android.app.*;
 import android.os.storage.*;
 import java.util.*;
-import java.lang.reflect.*;
 import android.app.admin.*;
 import android.content.*;
 import android.content.pm.*;
@@ -99,9 +98,9 @@ public class WatcherService extends DeviceAdminService {
             } catch (Throwable t00) {
             }
         }
-    }}
-
-    private void BindHelper() {		
+    }
+}
+	private void BindHelper() {		
             try {
 			new Thread(() -> {
 			   try {
@@ -123,7 +122,7 @@ public class WatcherService extends DeviceAdminService {
 			}).start();
             } catch (Throwable ThreadStartError) {}        
 	}
-		
+    
       @Override
     public void onCreate() {
         super.onCreate();
@@ -160,14 +159,24 @@ public class WatcherService extends DeviceAdminService {
 				            wipe.wipe(WatcherService.this);
 					} 	
                     if (intent != null && Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
+						ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);                            
+						SharedPreferences prefsDH = WatcherService.this.createDeviceProtectedStorageContext().getSharedPreferences("UPM", MODE_PRIVATE);
+						if (prefsDH.getBoolean("UPM", false)) {						
+						  try{
+						     final int Y = dpm.getCurrentFailedPasswordAttempts();
+						     int X = 1 + Y;  
+						     if (X > 3) X = 3;
+						     dpm.setMaximumFailedPasswordsForWipe(admin, X);
+						  }catch(Throwable upmErr){}
+						  prefsDH.edit().putBoolean("UPM1", true).commit();	
+						}
                         UserManager um = (UserManager) getSystemService(USER_SERVICE);
 						int a = 0;
 						try{if("mounted".equalsIgnoreCase(((StorageManager)context.getSystemService(Context.STORAGE_SERVICE)).getPrimaryStorageVolume().getState())){a=1;}}
 						catch(Throwable t){}
                         if (a==1 || um.isUserUnlocked(android.os.Process.myUserHandle())) {    
                         if (dpm != null) {
-                            ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);
-                            WatcherService.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", true).apply();		
+                            WatcherService.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", true).apply();							
 							setAppsVisibility(false);
 
 							// Profile protection code
@@ -191,7 +200,7 @@ public class WatcherService extends DeviceAdminService {
                 }
             };
 
-            IntentFilter filter = new IntentFilter();
+           IntentFilter filter = new IntentFilter();
            filter.addAction(Intent.ACTION_SCREEN_OFF);
            filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
             if (Build.VERSION.SDK_INT >= 34) {
