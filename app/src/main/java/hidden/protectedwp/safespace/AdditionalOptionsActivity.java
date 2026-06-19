@@ -13,6 +13,46 @@ import java.util.*;
 
 public class AdditionalOptionsActivity extends Activity {
 
+	private void isUPM() {
+    android.content.Context dpContext = getApplicationContext().createDeviceProtectedStorageContext();
+    android.content.SharedPreferences prefs = dpContext.getSharedPreferences("UPM", MODE_PRIVATE);
+    
+    if (prefs.getBoolean("UPM", false)) {
+        String warningText = "This setting is not available while UltraProtectMode is enabled";
+
+        android.app.AlertDialog lockDialog = new android.app.AlertDialog.Builder(this)
+            .setMessage(warningText)
+            .setCancelable(false)
+            .setPositiveButton("OK", new android.content.DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(android.content.DialogInterface dialog, int which) {
+                    finish();
+                }
+            })
+            .create();
+
+        android.view.Window window = lockDialog.getWindow();
+        if (window != null) {
+            window.addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);
+            window.getDecorView().setSystemUiVisibility(
+                android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY 
+                | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 
+                | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+            );
+            
+            android.view.WindowManager.LayoutParams lp = window.getAttributes();
+            lp.gravity = android.view.Gravity.CENTER;
+            lp.x = 0;
+            lp.y = 0; 
+            lp.width = android.view.WindowManager.LayoutParams.MATCH_PARENT; 
+            window.setAttributes(lp);
+        }
+        
+        lockDialog.show();
+    } else {
+        showWipeLimitDialog();
+    } }
+
     private static final String PREFS_NAME = "HiderPrefs";
     private static final String KEY_WIPE_ENABLED = "wipe_on_failed_pwd";
 
@@ -45,7 +85,8 @@ public class AdditionalOptionsActivity extends Activity {
 					Context appContext2 = getApplicationContext();
 					Intent actions2 = new Intent(appContext2, ActionsActivity.class);
 					actions2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-					appContext2.startActivity(actions2);}
+					appContext2.startActivity(actions2);
+					finish();}
 				} catch (Throwable tirex) {}
 				return;
 			} catch (Throwable t) {
@@ -130,6 +171,6 @@ public class AdditionalOptionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         super.onCreate(savedInstanceState);
-        showWipeLimitDialog();
+        isUPM();
     }
 }
