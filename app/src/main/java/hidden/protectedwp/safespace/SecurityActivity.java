@@ -2,6 +2,8 @@ package hidden.protectedwp.safespace;
 
 import android.app.Activity;
 import android.content.Context;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.view.WindowManager;
 import android.content.SharedPreferences;
@@ -139,7 +141,15 @@ public class SecurityActivity extends Activity {
                 wipe.wipe(this);
             } else if (verifyPassword(input, storedPass)) {
                 try {
-                    startActivity(new Intent(this, ZeroActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK));
+					SecurityActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", false).apply();							
+                    DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);                    
+					ComponentName admin = new ComponentName(this, MyDeviceAdminReceiver.class);                            
+					SharedPreferences prefsDH = SecurityActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("UPM", MODE_PRIVATE);
+					if (prefsDH.getBoolean("UPM", false)) {						
+					    prefsDH.edit().putBoolean("UPM1", false).commit();					 
+					    try{dpm.setMaximumFailedPasswordsForWipe(admin, 3);}catch(Throwable upmErr){}
+					}
+					startActivity(new Intent(this, ZeroActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK));
 				    finishAndRemoveTask();
                 } catch (Throwable StateErr) {
                     Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
