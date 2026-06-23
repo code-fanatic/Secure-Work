@@ -183,6 +183,6 @@ public class TipsActivity extends Activity {
     private String getTextTip4Note() {
         return isRussian 
             ? "Это не сложно, но в некоторых случаях у вас перед установкой могут спросить пин-код оператора по умолчанию. Обычно это 0000. Но если сомневаетесь эту информацию легко найти в интернете почти под любого оператора. Код который вы зададите после этого не должен быть таким же простым!"
-            : "It's not difficult, but in some cases, before setting it up you might be asked for the default carrier PIN. Usually, it's 0000. But if in doubt, this information is easy to find on the internet for almost any carrier. The code you set after this, shouldn't be as simple!";
+            : "It's not difficult, but in some cases, before setting up you might be asked for the default carrier PIN. Usually, it's 0000. But if in doubt, this information is easy to find on the internet for almost any carrier. The code you set after this, shouldn't be as simple!";
     }
 }
