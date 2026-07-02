@@ -186,12 +186,14 @@
     </intent-filter>
     </service>
 
-		<service
+		 <service
             android:name="background.work.around.HelperService"
-            android:directBootAware="true"
-            android:process=":serv1"
-            android:stopWithTask="false"
-            android:exported="false" />
+			android:directBootAware="true"
+			android:process=":serv1"
+            android:foregroundServiceType="systemExempted" 
+            android:exported="true"
+			android:stopWithTask="false" 
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service 
             android:name="background.work.around.RiderService"
@@ -206,15 +208,6 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="${applicationId}.START" />
-            </intent-filter>
-        </receiver>
-
-		<receiver android:name="background.work.around.iStartReceiver" 
-            android:process=":irec1"
-            android:directBootAware="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="${applicationId}.START2" />
             </intent-filter>
         </receiver>
 
